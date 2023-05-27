@@ -1,0 +1,27 @@
+.feed-form {
+  display: flex;
+  flex-direction: column;
+  width: 303px;
+
+  input {
+    padding: 0 20px;
+    height: 54px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    margin-bottom: 15px;
+
+    font-family: 'MuseoModerno';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    color: #4b4b4b;
+    &:last-of-type {
+      margin-bottom: 20px;
+    }
+  }
+
+  @media (max-width: 575px) {
+    width: 280px;
+  }
+}

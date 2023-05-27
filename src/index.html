@@ -26,7 +26,7 @@
         </div>
         <div class="header__contacts">
           <a class="header__phone" href="tel:+74999228974">+7 (499) 922-89-74</a>
-          <button class="button">заказать звонок</button>
+          <button class="button button--header">заказать звонок</button>
         </div>
       </header>
       <div class="promo__wrapper">
@@ -57,7 +57,7 @@
 
   <section class="advantage">
     <div class="container">
-      <h2 class="advantage__title">Наши преимущества</h2>
+      <h2 class="advantage__title title">Наши преимущества</h2>
       <ul class="advantage__list">
         <li class="advantage__item">
           <p class="advantage__caption">Делимся опытом</p>
@@ -74,10 +74,29 @@
         <li class="advantage__item">
           <p class="advantage__caption">Учим бегать</p>
           <p class="advantage__desc">Помогаем с обучением правильной технике бега! Дружим с крупнейшей школой бега в
-            России - <span>I LOVE RUNNING</span>.</p>
+            России - <a href="#">I LOVE RUNNING</a>.</p>
           <img src="img/icons/shoe.png" alt="shoe" class="advantage__icon">
         </li>
       </ul>
+    </div>
+  </section>
+
+  <section class="consultatiton">
+    <div class="container">
+      <h2 class="consultatiton__title title title--consultation">Получите бесплатную консультацию<br>
+        по подбору пульсометра</h2>
+      <p class="consultatiton__desc">Просто заполните форму заявки<br>
+        и мы перезвоним вам в течении 10 минут</p>
+      <form class="feed-form" action="#">
+        <label for="name" class="visually-hidden">Ваше имя</label>
+        <input type="text" name="name" placeholder="Ваше имя" id="name" required>
+        <label for="phone" class="visually-hidden">Ваш телефон</label>
+        <input type="tel" name="phone" placeholder="Ваш телефон" id="phone" required>
+        <label for="email" class="visually-hidden">Ваше имя</label>
+        <input type="email" name="email" placeholder="Ваш E-mail" id="email" required>
+
+        <button class="button button--submit">Заказать консультацию</button>
+      </form>
     </div>
   </section>
 </body>

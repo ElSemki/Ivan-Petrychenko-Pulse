@@ -1,0 +1,20 @@
+.consultatiton {
+  min-height: 680px;
+  padding: 100px 20px 108px;
+  background: url('../img/bg/form-bg.jpg') center center/cover no-repeat;
+  color: #ffffff;
+
+  &__title {
+    margin: 0;
+  }
+
+  &__desc {
+    margin: 0 0 36px;
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  @media (max-width: 575px) {
+    padding: 70px 20px 65px;
+  }
+}
