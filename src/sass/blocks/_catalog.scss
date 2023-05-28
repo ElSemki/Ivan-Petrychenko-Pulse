@@ -1,0 +1,240 @@
+.catalog {
+  padding: 0 20px 100px;
+
+  &__title {
+    margin-bottom: 46px;
+  }
+
+  &__tabs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 57px;
+  }
+
+  &__tab {
+    width: 222px;
+    height: 52px;
+    transform: skewX(-25deg);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 48px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #6b6b6b;
+    background-color: rgba(0, 0, 0, 0.0001);
+    border: 2px solid #d0d0d0;
+    cursor: pointer;
+    transition: 0.5s all;
+
+    &:hover {
+      border: none;
+      box-shadow: 3px 3px 20px #c70101;
+    }
+
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+
+    &--active {
+      color: #ffffff;
+      background-color: #c70101;
+      border: none;
+    }
+
+    div {
+      transform: skewX(25deg);
+    }
+  }
+
+  &__content {
+    display: none;
+    grid-template-columns: repeat(3, 300px);
+    justify-content: center;
+    column-gap: 20px;
+    row-gap: 20px;
+
+    &--active {
+      display: grid;
+    }
+  }
+
+  &-item {
+    overflow: hidden;
+    padding: 20px 20px 27px;
+    width: 300px;
+    min-height: 440px;
+    color: #0d0d0d;
+    border: 2px solid #e8e8e8;
+
+    &__img {
+      display: block;
+      height: 200px;
+      margin: 0 auto 15px;
+    }
+
+    &__subtitle {
+      margin-bottom: 16px;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    &__desc {
+      margin: 0;
+      margin-bottom: 10px;
+      font-weight: 300;
+      font-size: 14px;
+    }
+
+    &__link,
+    &__back {
+      display: block;
+      margin: 0 auto;
+      font-weight: 500;
+      font-size: 14px;
+      text-align: center;
+      text-decoration-line: underline;
+      text-transform: uppercase;
+      color: #c70101;
+    }
+
+    &__back {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(calc(-50% - 19px));
+    }
+
+    hr {
+      margin: 17px 0 17px;
+      background-color: #e8e8e8;
+      border-bottom: none;
+      opacity: 0.3;
+    }
+
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__old-price {
+      font-weight: 300;
+      font-size: 14px;
+      text-decoration-line: line-through;
+      color: #555555;
+    }
+
+    &__price {
+      font-weight: 700;
+      font-size: 20px;
+      color: #050505;
+    }
+
+    &__wrapper {
+      display: flex;
+      width: calc(200% + 40px);
+    }
+
+    &__content {
+      width: 50%;
+      margin-right: 0;
+      transform: translateX(-100%);
+      text-align: center;
+      transition: 0.5s all;
+
+      &--active {
+        transform: translateX(0%);
+        margin-right: 20px;
+      }
+    }
+
+    &__list {
+      position: relative;
+      width: 50%;
+      margin-left: 20px;
+      transform: translateX(0%);
+      padding-right: 20px;
+      padding-left: 14px;
+      transition: 0.5s all;
+
+      li {
+        position: relative;
+        font-weight: 300;
+        font-size: 14px;
+        color: #555555;
+
+        &:not(:last-child) {
+          margin-bottom: 20px;
+        }
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 3px;
+          left: -15px;
+          width: 8px;
+          height: 8px;
+          background-color: #c70101;
+        }
+      }
+
+      &--active {
+        transform: translateX(-100%);
+        margin-left: 0px;
+      }
+    }
+  }
+
+  @media (max-width: 991px) {
+    &__content--active {
+      grid-template-columns: repeat(2, 300px);
+    }
+  }
+
+  @media (max-width: 767px) {
+    &__tab {
+      width: 160px;
+      font-size: 14px;
+    }
+
+    &__content {
+      grid-template-columns: repeat(2, 250px);
+    }
+
+    &-item {
+      width: 250px;
+
+      &__list li {
+        font-size: 13px;
+      }
+
+      &__content {
+        transform: translateX(-110%);
+
+        &--active {
+          transform: translateX(0);
+        }
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    &__content--active {
+      grid-template-columns: 280px;
+    }
+
+    &__tab {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 80px;
+      font-size: 10px;
+      line-height: 12px;
+    }
+
+    &-item {
+      width: 280px;
+    }
+  }
+}

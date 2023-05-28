@@ -11,6 +11,7 @@
   text-align: center;
   text-transform: uppercase;
   color: #ffffff;
+  cursor: pointer;
 
   &--promo {
     width: 300px;
@@ -24,6 +25,12 @@
     font-size: 16px;
   }
 
+  &--catalog-item {
+    width: 135px;
+    height: 44px;
+    font-size: 14px;
+  }
+
   @media (max-width: 767px) {
     &--header {
       width: 140px;
@@ -33,6 +40,10 @@
       width: 225px;
       height: 50px;
       font-size: 14px;
+    }
+
+    &--catalog-item {
+      width: 100px;
     }
   }
 

@@ -11,6 +11,13 @@
     color: #ffffff;
   }
 
+  &--catalog {
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 45px;
+    text-align: center;
+  }
+
   @media (max-width: 575px) {
     &--consultation {
       font-size: 30px;
