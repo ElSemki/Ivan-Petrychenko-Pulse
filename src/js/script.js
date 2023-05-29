@@ -1,52 +1,79 @@
-const slider = tns({
-  container: '.carousel__list',
-  items: 1,
-  slideBy: 'page',
-  autoplay: false,
-  controls: false,
-  navPosition: 'bottom',
-  speed: 1200,
-});
+window.addEventListener('DOMContentLoaded', () => {
+  // Slider
+  const slider = tns({
+    container: '.carousel__list',
+    items: 1,
+    slideBy: 'page',
+    autoplay: false,
+    controls: false,
+    navPosition: 'bottom',
+    speed: 1200,
+  });
 
-document
-  .querySelector('.carousel__prev')
-  .addEventListener('click', () => slider.goTo('prev'));
+  document
+    .querySelector('.carousel__prev')
+    .addEventListener('click', () => slider.goTo('prev'));
 
-document
-  .querySelector('.carousel__next')
-  .addEventListener('click', () => slider.goTo('next'));
+  document
+    .querySelector('.carousel__next')
+    .addEventListener('click', () => slider.goTo('next'));
 
-$(document).ready(function () {
-  $('ul.catalog__tabs').on(
-    'click',
-    'li:not(.catalog__tab--active)',
-    function () {
-      $(this)
-        .addClass('catalog__tab--active')
-        .siblings()
-        .removeClass('catalog__tab--active')
-        .closest('div.container')
-        .find('div.catalog__content')
-        .removeClass('catalog__content--active')
-        .eq($(this).index())
-        .addClass('catalog__content--active');
+  // Tabs
+  function tabs() {
+    const tabsWrapper = document.querySelector('.catalog__tabs');
+    const tabItems = tabsWrapper.querySelectorAll('.catalog__tab');
+    const tabContent = document.querySelectorAll('.catalog__content');
+
+    function hideTabContent() {
+      tabContent.forEach((item) => {
+        item.classList.remove('catalog__content--active');
+      });
+
+      tabItems.forEach((item) => {
+        item.classList.remove('catalog__tab--active');
+      });
     }
-  );
 
-  function toggleSlide(className) {
-    $(className).each(function (i) {
-      $(this).on('click', function (e) {
+    function showTabContent(i = 0) {
+      tabContent[i].classList.add('catalog__content--active');
+      tabItems[i].classList.add('catalog__tab--active');
+    }
+
+    hideTabContent();
+    showTabContent();
+
+    tabsWrapper.addEventListener('click', (e) => {
+      let target = e.target;
+      if (
+        (target && target.classList.contains('catalog__tab')) ||
+        target.parentNode.classList.contains('catalog__tab')
+      ) {
+        tabItems.forEach((item, i) => {
+          if (target == item || target.parentNode == item) {
+            hideTabContent();
+            showTabContent(i);
+          }
+        });
+      }
+    });
+  }
+
+  tabs();
+
+  // Card content toggle
+  function toggleCardBody(className) {
+    const targets = document.querySelectorAll(className);
+    const catalog = document.querySelectorAll('.catalog-item__content');
+    const list = document.querySelectorAll('.catalog-item__list');
+    targets.forEach((target, i) => {
+      target.addEventListener('click', (e) => {
         e.preventDefault();
-        $('.catalog-item__content')
-          .eq(i)
-          .toggleClass('catalog-item__content--active');
-        $('.catalog-item__list')
-          .eq(i)
-          .toggleClass('catalog-item__list--active');
+        catalog[i].classList.toggle('catalog-item__content--active');
+        list[i].classList.toggle('catalog-item__list--active');
       });
     });
   }
 
-  toggleSlide('.catalog-item__link');
-  toggleSlide('.catalog-item__back');
+  toggleCardBody('.catalog-item__link');
+  toggleCardBody('.catalog-item__back');
 });
