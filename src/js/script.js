@@ -81,6 +81,7 @@ window.addEventListener('DOMContentLoaded', () => {
   function modalFn() {
     const modalConsult = document.querySelector('#consultation');
     const modalOrder = document.querySelector('#order');
+    const modalThanks = document.querySelector('#thanks');
     const modalTriggerConsult = document.querySelectorAll(
       '[data-modal="consultation"]'
     );
@@ -101,9 +102,11 @@ window.addEventListener('DOMContentLoaded', () => {
     function closeModal() {
       modalConsult.style.display = 'none';
       modalOrder.style.display = 'none';
+      modalThanks.style.display = 'none';
       overlay.style.display = 'none';
       modalConsult.classList.remove('fade');
       modalOrder.classList.remove('fade');
+      modalThanks.classList.remove('fade');
       document.body.style.overflow = '';
     }
 
