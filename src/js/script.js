@@ -76,4 +76,67 @@ window.addEventListener('DOMContentLoaded', () => {
 
   toggleCardBody('.catalog-item__link');
   toggleCardBody('.catalog-item__back');
+
+  // Modal
+  function modalFn() {
+    const modalConsult = document.querySelector('#consultation');
+    const modalOrder = document.querySelector('#order');
+    const modalTriggerConsult = document.querySelectorAll(
+      '[data-modal="consultation"]'
+    );
+    const modalTriggerOrder = document.querySelectorAll(
+      '.catalog-item__button'
+    );
+    const modalDesc = modalOrder.querySelector('.modal__desc');
+    const cardSubtitle = document.querySelectorAll('.catalog-item__subtitle');
+    const overlay = document.querySelector('.overlay');
+
+    function openModal(modal) {
+      modal.style.display = 'block';
+      overlay.style.display = 'block';
+      modal.classList.add('fade');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modalConsult.style.display = 'none';
+      modalOrder.style.display = 'none';
+      overlay.style.display = 'none';
+      modalConsult.classList.remove('fade');
+      modalOrder.classList.remove('fade');
+      document.body.style.overflow = '';
+    }
+
+    function modal() {
+      modalTriggerConsult.forEach((btn) => {
+        btn.addEventListener('click', () => openModal(modalConsult));
+      });
+
+      modalTriggerOrder.forEach((button, i) => {
+        button.addEventListener('click', () => {
+          modalDesc.textContent = cardSubtitle[i].textContent;
+          openModal(modalOrder);
+        });
+      });
+
+      overlay.addEventListener('click', (evt) => {
+        if (evt.target === overlay || evt.target.className === 'modal__close') {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', (evt) => {
+        if (
+          evt.code === 'Escape' &&
+          window.getComputedStyle(overlay).display === 'block'
+        ) {
+          closeModal();
+        }
+      });
+    }
+
+    modal();
+  }
+
+  modalFn();
 });

@@ -1,0 +1,68 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.56);
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 380px;
+  min-height: 400px;
+  padding: 38px 40px 40px;
+  background-color: #f2f2f2;
+
+  &__close {
+    position: absolute;
+    top: 0;
+    right: -40px;
+    font-size: 41px;
+    line-height: 21px;
+    color: #c70101;
+    cursor: pointer;
+  }
+
+  &__subtitle {
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    color: #0d0d0d;
+  }
+
+  &__desc {
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-size: 14px;
+    text-align: center;
+    color: #0d0d0d;
+  }
+
+  &__mini {
+    min-height: 140px;
+  }
+}
+
+#consultation,
+#order,
+#thanks {
+  display: none;
+}
+
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+@keyframes fade {
+  from {
+    opacity: 0.1;
+  }
+  to {
+    opacity: 1;
+  }
+}
