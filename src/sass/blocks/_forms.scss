@@ -9,19 +9,74 @@
     border: none;
     border-radius: 5px;
     background-color: #ffffff;
-    margin-bottom: 15px;
-
     font-family: 'MuseoModerno';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     color: #4b4b4b;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  .input-control {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+
     &:last-of-type {
       margin-bottom: 20px;
+    }
+
+    i {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 10px;
+      visibility: hidden;
+    }
+
+    small {
+      display: none;
+    }
+
+    &.success input {
+      border: 2px solid #2ecc71;
+    }
+
+    &.error input {
+      border: 2px solid #e74c3c;
+    }
+
+    &.success i.fa-check-circle {
+      color: #2ecc71;
+      visibility: visible;
+    }
+
+    &.error i.fa-exclamation-circle {
+      top: 36%;
+      transform: translateY(-36%);
+      color: #e74c3c;
+      visibility: visible;
+    }
+
+    &.error small {
+      display: block;
+      color: #e74c3c;
     }
   }
 
   @media (max-width: 575px) {
     width: 280px;
+
+    &--popup {
+      width: 100%;
+
+      input {
+        height: 40px;
+      }
+    }
   }
 }

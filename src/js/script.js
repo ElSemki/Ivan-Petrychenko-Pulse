@@ -77,6 +77,71 @@ window.addEventListener('DOMContentLoaded', () => {
   toggleCardBody('.catalog-item__link');
   toggleCardBody('.catalog-item__back');
 
+  // Forms
+  function form() {
+    const forms = document.querySelectorAll('.feed-form');
+    forms.forEach((form) => {
+      const username = form.querySelector('#name');
+      const phone = form.querySelector('#phone');
+      const email = form.querySelector('#email');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        checkInputs();
+      });
+
+      function checkInputs() {
+        // get the values from the inputs
+        const usernameValue = username.value.trim();
+        const phoneValue = phone.value.trim();
+        const emailValue = email.value.trim();
+
+        if (usernameValue === '') {
+          setErrorFor(username, 'Имя пользователя пустое');
+        } else {
+          setSuccessFor(username);
+        }
+
+        if (phoneValue === '') {
+          setErrorFor(phone, 'Телефон не может быть пустым');
+        } else if (phoneValue.length < 18) {
+          setErrorFor(phone, 'Телефон введен не верно');
+        } else {
+          setSuccessFor(phone);
+        }
+
+        if (emailValue === '') {
+          setErrorFor(email, 'E-mail не может быть пустым');
+        } else if (!isEmail(emailValue)) {
+          setErrorFor(email, 'E-mail не действительна');
+        } else {
+          setSuccessFor(email);
+        }
+      }
+
+      function setErrorFor(input, message) {
+        const inputControl = input.parentElement;
+        const small = inputControl.querySelector('small');
+        small.innerText = message;
+        inputControl.className = 'input-control error';
+      }
+
+      function setSuccessFor(input) {
+        const inputControl = input.parentElement;
+        inputControl.className = 'input-control success';
+      }
+
+      function isEmail(email) {
+        return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+          email
+        );
+      }
+    });
+  }
+
+  form();
+
   // Modal
   function modalFn() {
     const modalConsult = document.querySelector('#consultation');
@@ -142,4 +207,57 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   modalFn();
+
+  // Маска для телефона
+  function mask(selector) {
+    let setCursorPosition = (pos, elem) => {
+      elem.focus();
+
+      if (elem.setSelectionRange) {
+        elem.setSelectionRange(pos, pos);
+      } else if (elem.createTextRange) {
+        let range = elem.createTextRange();
+
+        range.collapse(true);
+        range.moveEnd('character', pos);
+        range.moveStart('character', pos);
+        range.select();
+      }
+    };
+
+    function createMask(event) {
+      let matrix = '+7 (___) ___ __ __';
+      let i = 0;
+      let def = matrix.replace(/\D/g, '');
+      let val = this.value.replace(/\D/g, '');
+      if (def.length >= val.length) {
+        val = def;
+      }
+
+      this.value = matrix.replace(/./g, function (a) {
+        return /[_\d]/.test(a) && i < val.length
+          ? val.charAt(i++)
+          : i >= val.length
+          ? ''
+          : a;
+      });
+      if (event.type === 'blur') {
+        if (this.value.length == 2) {
+          this.value = '';
+        }
+      } else {
+        setCursorPosition(this.value.length, this);
+      }
+    }
+
+    let inputs = document.querySelectorAll(selector);
+
+    inputs.forEach((input) => {
+      input.addEventListener('input', createMask);
+      input.addEventListener('focus', createMask);
+      input.addEventListener('blur', createMask);
+    });
+  }
+
+  mask('[name="phone"]');
 });
