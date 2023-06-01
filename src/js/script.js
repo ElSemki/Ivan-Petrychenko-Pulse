@@ -77,6 +77,78 @@ window.addEventListener('DOMContentLoaded', () => {
   toggleCardBody('.catalog-item__link');
   toggleCardBody('.catalog-item__back');
 
+  // Modal
+  const overlay = document.querySelector('.overlay');
+  const modalConsult = document.querySelector('#consultation');
+  const modalOrder = document.querySelector('#order');
+  const modalThanks = document.querySelector('#thanks');
+  const modalError = document.querySelector('#error');
+  const modalTriggerConsult = document.querySelectorAll(
+    '[data-modal="consultation"]'
+  );
+  const modalTriggerOrder = document.querySelectorAll('.catalog-item__button');
+
+  function openModal(modal) {
+    modal.style.display = 'block';
+    overlay.style.display = 'block';
+    modal.classList.add('fade');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modalConsult.style.display = 'none';
+    modalOrder.style.display = 'none';
+    modalThanks.style.display = 'none';
+    modalError.style.display = 'none';
+    overlay.style.display = 'none';
+    modalConsult.classList.remove('fade');
+    modalOrder.classList.remove('fade');
+    modalThanks.classList.remove('fade');
+    modalError.classList.remove('fade');
+    document.body.style.overflow = '';
+  }
+
+  function modalFn() {
+    const modalDesc = modalOrder.querySelector('.modal__desc');
+    const cardSubtitle = document.querySelectorAll('.catalog-item__subtitle');
+
+    function modal() {
+      modalTriggerConsult.forEach((btn) => {
+        btn.addEventListener('click', () => openModal(modalConsult));
+      });
+
+      modalTriggerOrder.forEach((button, i) => {
+        button.addEventListener('click', () => {
+          modalDesc.textContent = cardSubtitle[i].textContent;
+          openModal(modalOrder);
+        });
+      });
+
+      overlay.addEventListener('click', (evt) => {
+        if (
+          evt.target === overlay ||
+          evt.target.className === 'modal__close' ||
+          evt.target.className === 'button button--mobile'
+        ) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener('keydown', (evt) => {
+        if (
+          evt.code === 'Escape' &&
+          window.getComputedStyle(overlay).display === 'block'
+        ) {
+          closeModal();
+        }
+      });
+    }
+
+    modal();
+  }
+
+  modalFn();
+
   // Forms
   function form() {
     const forms = document.querySelectorAll('.feed-form');
@@ -85,39 +157,73 @@ window.addEventListener('DOMContentLoaded', () => {
       const phone = form.querySelector('#phone');
       const email = form.querySelector('#email');
 
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', formSend);
+
+      async function formSend(e) {
         e.preventDefault();
 
-        checkInputs();
-      });
+        let error = checkInputs();
+
+        let formData = new FormData(form);
+
+        if (error === 0) {
+          form.classList.add('_sending');
+          let response = await fetch('mailer/smart.php', {
+            method: 'POST',
+            body: formData,
+          });
+          if (response.ok) {
+            form.classList.remove('_sending');
+            // let result = await response.text();
+            closeModal();
+            openModal(modalThanks);
+            setTimeout(closeModal, 6000);
+            form.reset();
+          } else {
+            alert('Ошибка');
+            form.classList.remove('_sending');
+          }
+        } else {
+          closeModal();
+          openModal(modalError);
+        }
+      }
 
       function checkInputs() {
-        // get the values from the inputs
         const usernameValue = username.value.trim();
         const phoneValue = phone.value.trim();
         const emailValue = email.value.trim();
 
+        let error = 0;
+
         if (usernameValue === '') {
           setErrorFor(username, 'Имя пользователя пустое');
+          error++;
         } else {
           setSuccessFor(username);
         }
 
         if (phoneValue === '') {
           setErrorFor(phone, 'Телефон не может быть пустым');
+          error++;
         } else if (phoneValue.length < 18) {
           setErrorFor(phone, 'Телефон введен не верно');
+          error++;
         } else {
           setSuccessFor(phone);
         }
 
         if (emailValue === '') {
           setErrorFor(email, 'E-mail не может быть пустым');
+          error++;
         } else if (!isEmail(emailValue)) {
           setErrorFor(email, 'E-mail не действительна');
+          error++;
         } else {
           setSuccessFor(email);
         }
+
+        return error;
       }
 
       function setErrorFor(input, message) {
@@ -141,72 +247,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   form();
-
-  // Modal
-  function modalFn() {
-    const modalConsult = document.querySelector('#consultation');
-    const modalOrder = document.querySelector('#order');
-    const modalThanks = document.querySelector('#thanks');
-    const modalTriggerConsult = document.querySelectorAll(
-      '[data-modal="consultation"]'
-    );
-    const modalTriggerOrder = document.querySelectorAll(
-      '.catalog-item__button'
-    );
-    const modalDesc = modalOrder.querySelector('.modal__desc');
-    const cardSubtitle = document.querySelectorAll('.catalog-item__subtitle');
-    const overlay = document.querySelector('.overlay');
-
-    function openModal(modal) {
-      modal.style.display = 'block';
-      overlay.style.display = 'block';
-      modal.classList.add('fade');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      modalConsult.style.display = 'none';
-      modalOrder.style.display = 'none';
-      modalThanks.style.display = 'none';
-      overlay.style.display = 'none';
-      modalConsult.classList.remove('fade');
-      modalOrder.classList.remove('fade');
-      modalThanks.classList.remove('fade');
-      document.body.style.overflow = '';
-    }
-
-    function modal() {
-      modalTriggerConsult.forEach((btn) => {
-        btn.addEventListener('click', () => openModal(modalConsult));
-      });
-
-      modalTriggerOrder.forEach((button, i) => {
-        button.addEventListener('click', () => {
-          modalDesc.textContent = cardSubtitle[i].textContent;
-          openModal(modalOrder);
-        });
-      });
-
-      overlay.addEventListener('click', (evt) => {
-        if (evt.target === overlay || evt.target.className === 'modal__close') {
-          closeModal();
-        }
-      });
-
-      document.addEventListener('keydown', (evt) => {
-        if (
-          evt.code === 'Escape' &&
-          window.getComputedStyle(overlay).display === 'block'
-        ) {
-          closeModal();
-        }
-      });
-    }
-
-    modal();
-  }
-
-  modalFn();
 
   // Маска для телефона
   function mask(selector) {

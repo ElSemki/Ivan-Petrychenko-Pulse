@@ -50,7 +50,8 @@
 
 #consultation,
 #order,
-#thanks {
+#thanks,
+#error {
   display: none;
 }
 
@@ -79,6 +80,10 @@
 
     &__desc {
       font-size: 13px;
+    }
+
+    &__close {
+      display: none;
     }
   }
 }
