@@ -1,3 +1,6 @@
+@import 'libs/normalize';
+@import 'libs/fonts';
+
 * {
   font-family: 'Museo Sans Cyrl', sans-serif;
   font-style: normal;
@@ -50,3 +53,5 @@ img {
 @import 'blocks/reviews';
 @import 'blocks/footer';
 @import 'blocks/modal';
+@import 'blocks/page-up';
+@import 'blocks/animations';

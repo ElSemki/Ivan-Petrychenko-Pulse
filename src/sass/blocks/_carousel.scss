@@ -20,13 +20,12 @@
 
   &__prev {
     left: -66px;
-    background: url('../../img/icons/arrow-left.png') center center/cover
-      no-repeat;
+    background: url('../img/icons/arrow-left.png') center center/cover no-repeat;
   }
 
   &__next {
     right: -66px;
-    background: url('../../img/icons/arrow-right.png') center center/cover
+    background: url('../img/icons/arrow-right.png') center center/cover
       no-repeat;
   }
 
